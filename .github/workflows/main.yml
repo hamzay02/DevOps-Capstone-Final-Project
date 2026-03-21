@@ -21,15 +21,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
-          pip install flake8 nose coverage
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install flake8 nose coverage pylint
 
-      # ✅ ADD THIS (Lint step)
       - name: Lint with flake8
         run: |
           flake8 .
 
-      # ✅ ADD THIS (Test step)
       - name: Run unit tests with nosetests
         run: |
           nosetests
+
+      - name: Verify files
+        run: |
+          ls -l
+          python3 --version
