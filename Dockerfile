@@ -4,15 +4,17 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Copy requirements (if you have any) and install
-COPY setup.cfg ./
+# Copy ALL files
+COPY . .
+
+# Install dependencies
 RUN pip install --no-cache-dir flask
 
-# Copy the application code
-COPY app.py ./
-COPY __init__.py ./
+# Create non-root user
+RUN useradd -m appuser
+USER appuser
 
-# Expose the port your app runs on
+# Expose port
 EXPOSE 8080
 
 # Run the application
